@@ -4,6 +4,7 @@ import axios from 'axios';
 const ResumeUpload = () => {
   const [textData, setTextData] = useState('')
   const [selectedFile, setSelectedFile] = useState(null);
+  const [result,setResult] = useState(null)
 
   const handleTextChange = (e) => {
     setTextData(e.target.value)
@@ -32,10 +33,13 @@ const ResumeUpload = () => {
 
     //step 4. send the formData to the backend (this is a placeholder, replace with actual API call)
     try {
-      const response = await axios.post('/api/analyze', formData,{
-        headers: {  },
+      const response = await fetch('http://127.0.0.1:8000/api/analyze', {
+        method: 'POST',
+        body: formData
       })
-      console.log('Upload Success:', response.data)
+      const data = await response.json()
+      setResult(data)
+      console.log('Success:', data)
     } catch (error) {
       console.error('Error uploading file:', error)    
     }
@@ -78,6 +82,17 @@ const ResumeUpload = () => {
           Analyze Resume  
         </button>
       </form>
+
+      {result && (
+        <div>
+          <ul>
+            <li>job Description: {result.job_description}</li>
+            <br />
+            <li>Content : <br/>{result.content}</li>
+          </ul>
+        </div>
+      )}
+
     </div>
   )
 }
