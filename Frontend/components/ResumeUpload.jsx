@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import AnalysisResult from './AnalysisResult';
 
 const ResumeUpload = () => {
   const [textData, setTextData] = useState('')
@@ -85,11 +86,7 @@ const ResumeUpload = () => {
 
       {result && (
         <div>
-          <ul>
-            <li>job Description: {result.job_description}</li>
-            <br />
-            <li>Content : <br/>{result.content}</li>
-          </ul>
+          <AnalysisResult result={result}/>
         </div>
       )}
 
